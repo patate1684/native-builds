@@ -21,6 +21,7 @@ import kotlinx.serialization.json.JsonNames
 import kotlinx.serialization.json.JsonPrimitive
 import org.jetbrains.kotlin.konan.target.KonanTarget
 import java.io.File
+import java.io.FileOutputStream
 
 val GroupId = "com.ensody.nativebuilds"
 
@@ -59,7 +60,9 @@ private class BuildRegistry(val root: File) {
             )
         }
         if (!isRoot) {
-            resolve(pkg)
+            if (!(packages.containsValue(pkg))) {
+                resolve(pkg)
+            }
         }
     }
 
@@ -91,6 +94,11 @@ fun loadBuildPackages(root: File): List<BuildPackage> {
         registry.load(dependency)
     }
     registry.resolve()
+//    FileOutputStream(File("somefile.txt"), true).bufferedWriter().use { out ->
+//        registry.packages.forEach {
+//            out.write("${it.key}, ${it.value}\n")
+//        }
+//    }
     return registry.packages.values.sortedBy { it.name }
 }
 
@@ -132,6 +140,8 @@ enum class License(val id: String, val longName: String, val url: String) {
     MIT_CMU("MIT-CMU", "CMU License", "https://spdx.org/licenses/MIT-CMU.html"),
     Curl("curl", "curl License", "https://spdx.org/licenses/curl.html"),
     ZLib("Zlib", "zlib License", "https://www.zlib.net/zlib_license.html"),
+    BSL1_0("BSL-1.0", "Boost Software License 1.0", "http://www.boost.org/LICENSE_1_0.txt"),
+    LGPL3_0orlater("LGPL-3.0-or-later", "GNU Lesser General Public License v3.0 or later", "https://www.gnu.org/licenses/lgpl-3.0-standalone.html")
     ;
 
     companion object {

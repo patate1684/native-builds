@@ -96,6 +96,13 @@ val pkgGraph = listOf(
         ),
         republishVersionSuffix = mapOf("1.5.7" to ".8"),
     ),
+    PkgDef(
+        pkg = "symengine",
+        sublibDependencies = mapOf(
+            "libsymengine" to listOf(),
+        ),
+        republishVersionSuffix = mapOf("0.14.0" to "1"),
+    ),
 ).associateBy { it.pkg }
 
 // TODO: Debug builds will have to be done via overlays. They're not fully supported yet.

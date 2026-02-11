@@ -38,6 +38,13 @@
     },
     {
       "name": "zstd"
+    },
+    {
+      "name": "symengine",
+      "default-features": false,
+      "features": [
+        "mpfr"
+      ]
     }
   ]
 }
