@@ -29,79 +29,79 @@ plugins {
 setupBuildLogic {}
 
 val pkgGraph = listOf(
-    PkgDef(
-        pkg = "brotli",
-        sublibDependencies = mapOf(
-            "libbrotlicommon" to listOf(),
-            "libbrotlidec" to listOf("libbrotlicommon"),
-            "libbrotlienc" to listOf("libbrotlicommon"),
-        ),
-        republishVersionSuffix = mapOf("1.2.0" to "4"),
-    ),
-    PkgDef(
-        pkg = "curl",
-        sublibDependencies = mapOf(
-            "libcurl" to listOf("libcrypto", "libssl", "libnghttp2", "libnghttp3", "libtcp2", "libz"),
-        ),
-        republishVersionSuffix = mapOf("8.18.0" to "5"),
-    ),
-    PkgDef(
-        pkg = "lz4",
-        sublibDependencies = mapOf(
-            "liblz4" to listOf(),
-        ),
-        republishVersionSuffix = mapOf("1.10.0" to ".8"),
-    ),
-    PkgDef(
-        pkg = "nghttp2",
-        sublibDependencies = mapOf(
-            "libnghttp2" to listOf(),
-        ),
-        republishVersionSuffix = mapOf("1.68.0" to ".8"),
-    ),
-    PkgDef(
-        pkg = "nghttp3",
-        sublibDependencies = mapOf(
-            "libnghttp3" to listOf(),
-        ),
-        republishVersionSuffix = mapOf("1.14.0" to "4"),
-    ),
-    PkgDef(
-        pkg = "ngtcp2",
-        sublibDependencies = mapOf(
-            "libngtcp2" to listOf(),
-            "libngtcp2_crypto_ossl" to listOf("libngtcp2", "libcrypto"),
-        ),
-        republishVersionSuffix = mapOf("1.19.0" to "4"),
-    ),
-    PkgDef(
-        pkg = "openssl",
-        sublibDependencies = mapOf(
-            "libcrypto" to listOf(),
-            "libssl" to listOf("libcrypto"),
-        ),
-        republishVersionSuffix = mapOf("3.6.0" to "13"),
-    ),
-    PkgDef(
-        pkg = "zlib",
-        sublibDependencies = mapOf(
-            "libz" to listOf(),
-        ),
-        republishVersionSuffix = mapOf("1.3.1" to ".8"),
-    ),
-    PkgDef(
-        pkg = "zstd",
-        sublibDependencies = mapOf(
-            "libzstd" to listOf(),
-        ),
-        republishVersionSuffix = mapOf("1.5.7" to ".8"),
-    ),
+//    PkgDef(
+//        pkg = "brotli",
+//        sublibDependencies = mapOf(
+//            "libbrotlicommon" to listOf(),
+//            "libbrotlidec" to listOf("libbrotlicommon"),
+//            "libbrotlienc" to listOf("libbrotlicommon"),
+//        ),
+//        republishVersionSuffix = mapOf("1.2.0" to "4"),
+//    ),
+//    PkgDef(
+//        pkg = "curl",
+//        sublibDependencies = mapOf(
+//            "libcurl" to listOf("libcrypto", "libssl", "libnghttp2", "libnghttp3", "libtcp2", "libz"),
+//        ),
+//        republishVersionSuffix = mapOf("8.18.0" to "5"),
+//    ),
+//    PkgDef(
+//        pkg = "lz4",
+//        sublibDependencies = mapOf(
+//            "liblz4" to listOf(),
+//        ),
+//        republishVersionSuffix = mapOf("1.10.0" to ".8"),
+//    ),
+//    PkgDef(
+//        pkg = "nghttp2",
+//        sublibDependencies = mapOf(
+//            "libnghttp2" to listOf(),
+//        ),
+//        republishVersionSuffix = mapOf("1.68.0" to ".8"),
+//    ),
+//    PkgDef(
+//        pkg = "nghttp3",
+//        sublibDependencies = mapOf(
+//            "libnghttp3" to listOf(),
+//        ),
+//        republishVersionSuffix = mapOf("1.14.0" to "4"),
+//    ),
+//    PkgDef(
+//        pkg = "ngtcp2",
+//        sublibDependencies = mapOf(
+//            "libngtcp2" to listOf(),
+//            "libngtcp2_crypto_ossl" to listOf("libngtcp2", "libcrypto"),
+//        ),
+//        republishVersionSuffix = mapOf("1.19.0" to "4"),
+//    ),
+//    PkgDef(
+//        pkg = "openssl",
+//        sublibDependencies = mapOf(
+//            "libcrypto" to listOf(),
+//            "libssl" to listOf("libcrypto"),
+//        ),
+//        republishVersionSuffix = mapOf("3.6.0" to "13"),
+//    ),
+//    PkgDef(
+//        pkg = "zlib",
+//        sublibDependencies = mapOf(
+//            "libz" to listOf(),
+//        ),
+//        republishVersionSuffix = mapOf("1.3.1" to ".8"),
+//    ),
+//    PkgDef(
+//        pkg = "zstd",
+//        sublibDependencies = mapOf(
+//            "libzstd" to listOf(),
+//        ),
+//        republishVersionSuffix = mapOf("1.5.7" to ".8"),
+//    ),
     PkgDef(
         pkg = "symengine",
         sublibDependencies = mapOf(
             "libsymengine" to listOf(),
         ),
-        republishVersionSuffix = mapOf("0.14.0" to "1"),
+        republishVersionSuffix = mapOf("0.14.0" to ".1"),
     ),
 ).associateBy { it.pkg }
 
