@@ -129,8 +129,8 @@ val initBuildTask = tasks.register("cleanNativeBuild") {
         }
 
         // If we don't delete this, vcpkg will think that the package might already be installed and skip the output
-        // to x-packages-root.
-        File("$rootDir/vcpkg_installed").deleteRecursively()
+        // to x-packages-root. TODO is this needed ?
+        // File("$rootDir/vcpkg_installed").deleteRecursively()
 
         overlayTriplets.deleteRecursively()
         overlayTriplets.mkdirs()
@@ -279,6 +279,7 @@ for (target in targets) {
                     "./vcpkg/vcpkg",
                     "install",
                     "--overlay-triplets=$overlayTriplets",
+                    "--overlay-ports=${File(rootDir, "vcpkg-overlay-ports").absolutePath}",
                     "--triplet",
                     triplet,
                     "--x-packages-root",
