@@ -13,7 +13,7 @@ pluginManagement {
 
 rootProject.name = "NativeBuilds-Example"
 
-val ignorePaths = mutableSetOf("build", "docs", "gradle", "src", "vcpkg", "vcpkg-tool", "vcpkg_installed")
+val ignorePaths = mutableSetOf("build", "docs", "gradle", "src", "vcpkg", "vcpkg-tool", "vcpkg_installed", "vcpkg-overlay-ports")
 if (System.getenv("WITH_WRAPPERS") != "true") {
     ignorePaths.add("generated-kotlin-wrappers")
 }

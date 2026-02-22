@@ -4,4 +4,4 @@ set BUILD_TARGETS=macosArm64,macosX64,iosArm64,iosSimulatorArm64,iosX64,androidN
 set PUBLISHING=true
 .\gradlew.bat generateBuildScripts
 set WITH_WRAPPERS=true
-.\gradlew.bat publishAllPublicationsToMavenLocalRepository
+.\gradlew.bat publishAllPublicationsToLocalMavenRepository

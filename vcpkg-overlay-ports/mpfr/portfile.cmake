@@ -17,11 +17,6 @@ vcpkg_extract_source_archive(
 vcpkg_configure_make(
     SOURCE_PATH "${SOURCE_PATH}"
     AUTOCONFIG
-    OPTIONS
-            "--disable-static"
-            "--enable-shared"
-            "ac_cv_lib_gmp___gmpz_init=yes"
-            "gmp_cv_prog_exeext_for_cc=.exe"
 )
 
 vcpkg_install_make()
