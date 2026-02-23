@@ -100,8 +100,25 @@ val pkgGraph = listOf(
         pkg = "symengine",
         sublibDependencies = mapOf(
             "libsymengine" to listOf(),
+            "symengine" to listOf(),
         ),
         republishVersionSuffix = mapOf("0.14.0" to ".1"),
+    ),
+    PkgDef(
+        pkg = "mpfr",
+        sublibDependencies = mapOf(
+            "libmpfr" to listOf("libgmp"),
+            "mpfr" to listOf("gmp"),
+        ),
+        republishVersionSuffix = emptyMap(),
+    ),
+    PkgDef(
+        pkg = "gmp",
+        sublibDependencies = mapOf(
+            "libgmp" to listOf(),
+            "gmp" to listOf(),
+        ),
+        republishVersionSuffix = emptyMap(),
     ),
 ).associateBy { it.pkg }
 
@@ -347,7 +364,7 @@ val generateBuildScriptsTask = tasks.register("generateBuildScripts")
 for (pkg in packages) {
     if (!isPublishing || pkg.isPublished) continue
 
-    val pkgDef = pkgGraph.getValue(pkg.name)
+    val pkgDef = pkgGraph[pkg.name] ?: continue
 
     val baseWrappersPath = File(wrappersPath, "static")
     val pkgPath = File(baseWrappersPath, pkg.name)
