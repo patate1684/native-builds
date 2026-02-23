@@ -31,6 +31,9 @@ fun Project.setupRepositories() {
         mavenCentral()
         if (System.getenv("RUNNING_ON_CI") != "true") {
             mavenLocal()
+            maven {
+                url = uri("${rootProject.rootDir}/../build/localmaven")
+            }
         }
     }
 }

@@ -94,9 +94,15 @@ public fun Project.addJvmNativeBuilds(
     for (artifact in libs) {
         val rawArtifact = artifact.get()
         for (target in targets) {
+            val depName = "${rawArtifact.module.name}-${target.suffix}"
+            val depVersion = rawArtifact.version ?: continue
+            if (!isArtifactAvailableLocally(rawArtifact.module.group, depName, depVersion)) {
+                logger.lifecycle("Skipping unavailable local artifact: $depName:${rawArtifact.version}")
+                continue
+            }
             dependencies.add(
                 "nativeBuild",
-                "${rawArtifact.module.group}:${rawArtifact.module.name}-${target.suffix}:${rawArtifact.version}",
+                "${rawArtifact.module.group}:$depName:$depVersion",
             ) {
                 isTransitive = false
             }
@@ -203,3 +209,25 @@ internal fun Project.getKmpExtension(): KotlinMultiplatformExtension =
 internal fun Project.getJniHeadersTask(): CopyJniHeaders =
     tasks.withType<CopyJniHeaders>().firstOrNull()
         ?: tasks.register<CopyJniHeaders>("jniHeaders").get()
+
+/**
+ * Returns true if the artifact POM exists in either the project's localmaven or ~/.m2.
+ * This avoids adding dependencies for platform artifacts that haven't been built yet
+ * (e.g. Android artifacts when only building on Windows).
+ * On CI all artifacts are expected to be present, so we skip the check there.
+ */
+internal fun Project.isArtifactAvailableLocally(group: String, name: String, version: String): Boolean {
+    if (System.getenv("RUNNING_ON_CI") == "true") return true
+    val pomRelPath = "${group.replace('.', '/')}/$name/$version/$name-$version.pom"
+    // Walk up from the project dir to find any build/localmaven (handles composite builds
+    // where rootProject is the example root, not the nativebuilds root).
+    var dir: File? = projectDir
+    while (dir != null) {
+        val candidate = File(dir, "build/localmaven/$pomRelPath")
+        if (candidate.exists()) return true
+        dir = dir.parentFile
+    }
+    val m2 = File(System.getProperty("user.home"), ".m2/repository/$pomRelPath")
+    if (m2.exists()) return true
+    return false
+}

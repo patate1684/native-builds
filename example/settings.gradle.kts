@@ -7,6 +7,19 @@ pluginManagement {
         mavenCentral()
         if (System.getenv("RUNNING_ON_CI") != "true") {
             mavenLocal()
+            maven(url = "../build/localmaven")
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        if (System.getenv("RUNNING_ON_CI") != "true") {
+            mavenLocal()
+            maven(url = rootDir.resolve("../build/localmaven"))
         }
     }
 }

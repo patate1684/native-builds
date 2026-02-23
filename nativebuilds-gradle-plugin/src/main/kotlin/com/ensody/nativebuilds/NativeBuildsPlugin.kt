@@ -4,7 +4,6 @@ package com.ensody.nativebuilds
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.internal.component.external.model.ModuleComponentArtifactIdentifier
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.support.unzipTo
 import org.gradle.kotlin.dsl.support.useToRun
@@ -18,17 +17,19 @@ public class NativeBuildsPlugin : Plugin<Project> {
         target.run {
             val nativeBuild = configurations.create("nativeBuild")
             tasks.register("unzipNativeBuilds") {
-                inputs.files(nativeBuild)
                 outputs.dir(layout.buildDirectory.dir("nativebuilds"))
-                val artifactsProvider = nativeBuild.incoming.artifactView {
-                    lenient(true)
-                }.artifacts
+                // Use lenientConfiguration so missing platform artifacts (e.g. android when
+                // only mingwX64 has been built locally) don't fail the build.
+                inputs.files(
+                    provider {
+                        nativeBuild.resolvedConfiguration.lenientConfiguration.artifacts.map { it.file }
+                    }
+                )
 
                 doLast {
                     outputs.files.singleFile.deleteRecursively()
-                    artifactsProvider.artifacts.forEach { artifact ->
-                        val identifier = artifact.id as ModuleComponentArtifactIdentifier
-                        val name = identifier.componentIdentifier.moduleIdentifier.name
+                    nativeBuild.resolvedConfiguration.lenientConfiguration.artifacts.forEach { artifact ->
+                        val name = artifact.moduleVersion.id.name
                         val outputDir = File(outputs.files.singleFile, name)
                         unzipTo(outputDir, artifact.file)
                         val classesJar = File(outputDir, "classes.jar")
