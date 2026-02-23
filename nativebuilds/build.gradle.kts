@@ -347,7 +347,7 @@ val generateBuildScriptsTask = tasks.register("generateBuildScripts")
 for (pkg in packages) {
     if (!isPublishing || pkg.isPublished) continue
 
-    val pkgDef = pkgGraph.getValue(pkg.name)
+    val pkgDef = pkgGraph[pkg.name] ?: continue
 
     val baseWrappersPath = File(wrappersPath, "static")
     val pkgPath = File(baseWrappersPath, pkg.name)
